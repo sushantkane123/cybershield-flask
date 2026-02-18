@@ -1,40 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Admin Dashboard</h1>
+<div class="card">
+    <h2>Admin Control Panel</h2>
+    <p>System-wide visibility and audit access.</p>
+</div>
 
-<h2>Users</h2>
-<table border="1" cellpadding="6" style="margin:auto">
-    <tr>
-        <th>Username</th>
-        <th>Role</th>
-        <th>Created</th>
-    </tr>
-    {% for user in users %}
-    <tr>
-        <td>{{ user.username }}</td>
-        <td>{{ user.role }}</td>
-        <td>{{ user.created_at }}</td>
-    </tr>
-    {% endfor %}
-</table>
+<div class="grid">
+    <div class="card">
+        <h3>👤 Users</h3>
+        <ul>
+            {% for user in users %}
+                <li>{{ user.username }} — {{ user.role }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 
-<br>
-
-<h2>Audit Logs</h2>
-<table border="1" cellpadding="6" style="margin:auto">
-    <tr>
-        <th>Event</th>
-        <th>Time</th>
-    </tr>
-    {% for log in logs %}
-    <tr>
-        <td>{{ log.event }}</td>
-        <td>{{ log.created_at }}</td>
-    </tr>
-    {% endfor %}
-</table>
-
-<br>
-<a href="/dashboard">Back</a>
+    <div class="card">
+        <h3>📜 Audit Logs</h3>
+        <ul>
+            {% for log in logs %}
+                <li>{{ log.created_at }} → {{ log.event }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock %}
+
