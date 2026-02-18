@@ -8,16 +8,17 @@
     <style>
         :root {
             --bg: #020617;
-            --card: #0f172a;
+            --panel: #0f172a;
+            --sidebar: #020617;
+            --border: #1e293b;
             --accent: #38bdf8;
             --text: #e5e7eb;
             --muted: #94a3b8;
             --danger: #ef4444;
+            --success: #22c55e;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -26,41 +27,66 @@
             color: var(--text);
         }
 
-        header {
-            background: #020617;
-            border-bottom: 1px solid #1e293b;
-            padding: 16px 30px;
+        /* Top bar */
+        .topbar {
+            height: 60px;
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
         }
 
-        header h1 {
+        .topbar h1 {
+            font-size: 20px;
             margin: 0;
-            font-size: 22px;
             color: var(--accent);
         }
 
-        nav a {
-            margin-left: 18px;
+        .topbar .user {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        /* Layout */
+        .layout {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: var(--sidebar);
+            border-right: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px 24px;
             color: var(--muted);
             text-decoration: none;
             font-weight: 500;
         }
 
-        nav a:hover {
+        .sidebar a:hover {
+            background: var(--panel);
             color: var(--accent);
         }
 
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            padding: 40px 20px;
+        /* Content */
+        .content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
         }
 
+        /* Cards */
         .card {
-            background: var(--card);
-            border: 1px solid #1e293b;
+            background: var(--panel);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 24px;
             margin-bottom: 24px;
@@ -68,67 +94,71 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 10px 18px;
-            border-radius: 8px;
-            background: var(--accent);
-            color: #020617;
-            text-decoration: none;
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+
+        th {
+            color: var(--muted);
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        /* Badges */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
             font-weight: 600;
         }
 
-        .btn.secondary {
-            background: transparent;
-            color: var(--accent);
-            border: 1px solid var(--accent);
-        }
-
-        .danger {
-            color: var(--danger);
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: var(--muted);
-            font-size: 14px;
-            border-top: 1px solid #1e293b;
-        }
+        .badge.admin { background: #1e40af; }
+        .badge.user { background: #065f46; }
+        .badge.success { background: var(--success); }
+        .badge.danger { background: var(--danger); }
     </style>
 </head>
 <body>
 
-<header>
+<div class="topbar">
     <h1>🛡 CyberShield</h1>
-    <nav>
-        <a href="/">Home</a>
-
+    <div class="user">
         {% if session.user %}
-            <a href="/dashboard">Dashboard</a>
-
-            {% if session.role == "admin" %}
-                <a href="/admin">Admin</a>
-            {% endif %}
-
-            <a href="/logout" class="danger">Logout</a>
+            {{ session.user }} ({{ session.role }}) · <a href="/logout" style="color:#ef4444">Logout</a>
         {% else %}
-            <a href="/login">Login</a>
+            <a href="/login" style="color:#38bdf8">Login</a>
         {% endif %}
-    </nav>
-</header>
-
-<div class="container">
-    {% block content %}{% endblock %}
+    </div>
 </div>
 
-<footer>
-    © {{ 2026 }} CyberShield · Secure Access Platform
-</footer>
+<div class="layout">
+    <div class="sidebar">
+        <a href="/">🏠 Home</a>
+        {% if session.user %}
+            <a href="/dashboard">📊 Dashboard</a>
+        {% endif %}
+        {% if session.role == "admin" %}
+            <a href="/admin">🧠 Admin Panel</a>
+        {% endif %}
+    </div>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</div>
 
 </body>
 </html>
+
