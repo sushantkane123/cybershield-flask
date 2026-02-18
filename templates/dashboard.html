@@ -2,24 +2,25 @@
 
 {% block content %}
 <div class="card">
-    <h2>User Dashboard</h2>
-    <p>Welcome back, <strong>{{ session.user }}</strong>.</p>
+    <h2>Security Dashboard</h2>
+    <p>Real-time system overview.</p>
 </div>
 
 <div class="grid">
     <div class="card">
-        <h3>Account Status</h3>
-        <p>Active</p>
+        <h3>User</h3>
+        <span class="badge success">Active</span>
+        <p>{{ session.user }}</p>
     </div>
 
     <div class="card">
         <h3>Role</h3>
-        <p>{{ session.role }}</p>
+        <span class="badge {{ session.role }}">{{ session.role }}</span>
     </div>
 
     <div class="card">
-        <h3>Security</h3>
-        <p>Session Protected</p>
+        <h3>Session</h3>
+        <p>Secure · Encrypted</p>
     </div>
 </div>
 {% endblock %}
