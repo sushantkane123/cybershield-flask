@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Dashboard</h1>
+<p>Welcome, {{ session.user }} 👋</p>
+
+{% if session.role == "admin" %}
+<p><strong>Role:</strong> Admin</p>
+<a href="/admin">Go to Admin Panel</a>
+{% endif %}
+
+<br><br>
+<a href="/logout">Logout</a>
+{% endblock %}
