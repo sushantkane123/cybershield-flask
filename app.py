@@ -1,11 +1,15 @@
-from flask import Flask
+from flask import Flask, render_template
 import os
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "CyberShield Flask app is running 🚀"
+    return render_template("home.html", title="Home")
+
+@app.route("/login")
+def login():
+    return render_template("login.html", title="Login")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

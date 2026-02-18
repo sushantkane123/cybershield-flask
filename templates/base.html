@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title or "CyberShield" }}</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #0f172a;
+            color: #e5e7eb;
+        }
+        header {
+            background: #020617;
+            padding: 15px;
+            text-align: center;
+            font-size: 22px;
+            color: #38bdf8;
+        }
+        nav a {
+            margin: 0 10px;
+            color: #38bdf8;
+            text-decoration: none;
+        }
+        .container {
+            padding: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    🛡️ CyberShield
+    <nav>
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+    </nav>
+</header>
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>
