@@ -1,3 +1,4 @@
+from database import init_db, authenticate_user, get_all_users, get_logs
 from flask import Flask, render_template, request, redirect, session, url_for
 import os
 from database import init_db, authenticate_user

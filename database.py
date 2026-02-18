@@ -59,3 +59,18 @@ def authenticate_user(username, password):
     if user and check_password_hash(user["password"], password):
         return user
     return None
+def get_all_users():
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("SELECT username, role, created_at FROM users")
+    users = cur.fetchall()
+    conn.close()
+    return users
+
+def get_logs():
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("SELECT event, created_at FROM logs ORDER BY id DESC")
+    logs = cur.fetchall()
+    conn.close()
+    return logs
