@@ -1,14 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Dashboard</h1>
-<p>Welcome, {{ session.user }} 👋</p>
+<div class="card">
+    <h2>User Dashboard</h2>
+    <p>Welcome back, <strong>{{ session.user }}</strong>.</p>
+</div>
 
-{% if session.role == "admin" %}
-<p><strong>Role:</strong> Admin</p>
-<a href="/admin">Go to Admin Panel</a>
-{% endif %}
+<div class="grid">
+    <div class="card">
+        <h3>Account Status</h3>
+        <p>Active</p>
+    </div>
 
-<br><br>
-<a href="/logout">Logout</a>
+    <div class="card">
+        <h3>Role</h3>
+        <p>{{ session.role }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Security</h3>
+        <p>Session Protected</p>
+    </div>
+</div>
 {% endblock %}
