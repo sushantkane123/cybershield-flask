@@ -1,6 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Welcome to CyberShield</h1>
-<p>Security dashboard powered by Flask</p>
+<div class="card">
+    <h2>Enterprise-Grade Security Platform</h2>
+    <p class="muted">
+        CyberShield provides secure authentication, role-based access,
+        and full audit logging for compliance-driven environments.
+    </p>
+
+    {% if session.user %}
+        <p>
+            Logged in as <strong>{{ session.user }}</strong>
+        </p>
+        <a href="/dashboard" class="btn">Go to Dashboard</a>
+    {% else %}
+        <a href="/login" class="btn">Login</a>
+        <a href="/login" class="btn secondary">Learn More</a>
+    {% endif %}
+</div>
+
+<div class="grid">
+    <div class="card">
+        <h3>🔐 Secure Authentication</h3>
+        <p>Password hashing, sessions, and access control.</p>
+    </div>
+
+    <div class="card">
+        <h3>📊 Audit Logging</h3>
+        <p>Track logins, actions, and admin events.</p>
+    </div>
+
+    <div class="card">
+        <h3>🧠 Admin Intelligence</h3>
+        <p>Centralized admin dashboard with user visibility.</p>
+    </div>
+</div>
 {% endblock %}
