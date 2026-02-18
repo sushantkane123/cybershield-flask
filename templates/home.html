@@ -1,38 +1,74 @@
-{% extends "base.html" %}
-
-{% block content %}
-<div class="card">
-    <h2>Enterprise-Grade Security Platform</h2>
-    <p class="muted">
-        CyberShield provides secure authentication, role-based access,
-        and full audit logging for compliance-driven environments.
-    </p>
-
-    {% if session.user %}
-        <p>
-            Logged in as <strong>{{ session.user }}</strong>
-        </p>
-        <a href="/dashboard" class="btn">Go to Dashboard</a>
-    {% else %}
-        <a href="/login" class="btn">Login</a>
-        <a href="/login" class="btn secondary">Learn More</a>
-    {% endif %}
-</div>
-
-<div class="grid">
-    <div class="card">
-        <h3>🔐 Secure Authentication</h3>
-        <p>Password hashing, sessions, and access control.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Webpage Demo</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: #111; }
+        canvas { display: block; }
+        #overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-family: Arial, sans-serif;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div id="overlay">
+        <h1>3D Webpage Example</h1>
+        <p>Use your mouse to rotate the cube.</p>
     </div>
+    <!-- Include Three.js library from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+    <script>
+        // Scene, Camera, Renderer
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({antialias:true});
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-    <div class="card">
-        <h3>📊 Audit Logging</h3>
-        <p>Track logins, actions, and admin events.</p>
-    </div>
+        // 3D Cube
+        const geometry = new THREE.BoxGeometry(2,2,2);
+        const material = new THREE.MeshStandardMaterial({ color: 0x00ffcc, roughness:0.5, metalness:0.7 });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
 
-    <div class="card">
-        <h3>🧠 Admin Intelligence</h3>
-        <p>Centralized admin dashboard with user visibility.</p>
-    </div>
-</div>
-{% endblock %}
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0xffffff, 1);
+        pointLight.position.set(5,5,5);
+        scene.add(pointLight);
+
+        camera.position.z = 5;
+
+        // Mouse rotation
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = - (event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        // Animate
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01 + mouseY * 0.05;
+            cube.rotation.y += 0.01 + mouseX * 0.05;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Responsive
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
